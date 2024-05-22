@@ -18,11 +18,13 @@ Pytorch Geometric Signed Directed [GitHub Pages](https://github.com/SherylHYX/py
 ## Repository structure
 
 The repository contains three folders:
-- **data** contains the syntactic graphs without digos in *synthetic*, the synthetic graphs with digons in *synthetic_digons* and the WikiRfa dataset in *wikirfa*.
-- **generative_graph** contains the code for creating the two different classes of synthetic graphs:
-   -  *generative_synthetic_data* for graphs without digons
-   -  *generate_synthetic_data_with_antiparallel* for graphs with digons 
-- **src** contains all the model implementations used for running the experiments. Futhermore, it stores two other foldes **utils** and **layer**.
+- **data** contains the original_data folder with the dataset divided in:
+   1. **cocitation** folder for *citeseer*, *cora*, *pubmed*
+   2. **mail** folder for *email-Enron*, *email-Eu*
+   3. **synthetic** folder for the syntehtic dataset
+   4. **other** folder to save the other datasets
+- **model** contains the code for the model
+- **src** contains the implementation of our Lapalcian
 
 ## Run code
 

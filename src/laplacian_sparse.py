@@ -27,12 +27,9 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
                   return_lambda_max: bool = False):
     
     """
-    This section encode the Directed Hyeprgraph Laplacian (sparse)
-    Dv^-1/2( H D_e^-1 H^* + I) Dv^-1/2
-    We use this equation
-    
-    Problem: How to treat identity matrix?
-    
+    This section encode the Laplacian
+    I - Dv^-1/2( H D_e^-1 H^* + I) Dv^-1/2
+    We use this equation    
     """
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -40,12 +37,6 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
     if normalization is not None:
         assert normalization in ['sym'], 'Invalid normalization'
 
-    # incident matrix so no need of remove self-loop
-    #H = torch.sparse.FloatTensor(
-    #indices=edge_index,
-    #values=edge_weight,
-    #size=(num_nodes, num_nodes),
-    #).cpu().coalesce()
     if edge_weight is None or not torch.is_complex(edge_weight):
         edge_weight = torch.ones(edge_index.size(1), dtype=dtype,
                                  device=edge_index.device)
@@ -53,14 +44,6 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
     row, col = edge_index.cpu()
     size_col = max(col) + 1
     H = coo_matrix((edge_weight.cpu(), (row, col)), shape=(num_nodes, size_col), dtype=np.complex64)
-
-    # Adding the self-loop to the H incident matrix 
-
-    # estrazione della vertex degree (sommo su ogni riga) e dell'edge degree
-    # Sum the real and imaginary parts element-wise
-    # ##########################################
-    ##### Node degree  
-    #############################################
 
     d_node = np.array(np.abs(H).sum(axis=1)) #.real + np.abs(H).sum(axis=1).imag) #[0] # node degree (sommo sulle righe)
     d_node[d_node == 0] = 1
@@ -86,61 +69,22 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
     deg_edge_inv_sqrt[deg_edge_inv_sqrt == float('inf')]= 0
     De = coo_matrix((deg_edge_inv_sqrt.flatten(), (np.arange(size_col), np.arange(size_col))), shape=(size_col, size_col), dtype=np.float32)
 
-    ##############################
-    ### Diagonal matrix = identity matrix
-    ##############################
 
-    #diag = coo_matrix( (np.ones(num_nodes), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32)
+
     
-    
-    
-    # Costruzione di al normalizzata Dv^-1/2( H D_e^-1 H^* + I) Dv^-1/2
-    
-    A = H.dot(De).dot(np.conjugate(H).T) # L = H De H^T
+    A = H.dot(De).dot(np.conjugate(H).T)
 
-    ############################
-    ############ Versione senza diagonale
-    #########################
+    L =  Dv.dot(A).dot(Dv) 
 
-    #L =  Dv.dot(A).dot(Dv) # L = I + Dv A Dv
-
-    #diag_n = coo_matrix((L.diagonal(), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32)
-
-    #L = L - diag_n
-
-    #edge_index, edge_weight = get_specific(L, device)
-    #return edge_index, edge_weight.real, edge_weight.imag
-
-
-    ###########################################
-    ############  CORRETTO
-    #####################################################
-
-    L =  Dv.dot(A).dot(Dv) # L = I + Dv A Dv
-    
-    # extract diagonal matrix di L cioe' I/De
     diag_n = coo_matrix((L.diagonal(), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32)
 
 
 
-    # extract diagonal out of A
     A_diag = coo_matrix((A.diagonal(), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32)
 
     A_out =  A - A_diag
-    # sommo i due e ottengo una amtric An = i/De + A/De
-    A_n = A_out + diag_n
-    # sommo alla precednete Dv l'identita' e ottengo Dn
-    #D_vn = Dv + diag
-    # # ricoalcolo L che ora sara Dn An Dn 
+    A_n = A_out + diag_n 
     L2 =  D_vn.dot(A_n).dot(D_vn)
-
-
-
-
-    #L = torch.mm(torch.mm( Dv, torch.mm(torch.mm(H.to_dense(), De.to_dense()), torch.conj(H.T.to_dense()))  ), Dv.to_dense()) + identity
-
-    # Aggiungere identity matrix
-    #L_norm = torch.to_numpy(L).to_sparse()
 
     edge_index, edge_weight = get_specific(L2, device)
     return edge_index, edge_weight.real, edge_weight.imag
@@ -173,16 +117,11 @@ def __norm__(
         edge_weight_real = (2.0 * edge_weight_real) / lambda_max
         edge_weight_real.masked_fill_(edge_weight_real == float("inf"), 0)
 
-        #_, edge_weight_real = add_self_loops(
-        #    edge_index, edge_weight_real, fill_value=-1.0, num_nodes=num_nodes
-        #)
         assert edge_weight_real is not None
 
         edge_weight_imag = (2.0 * edge_weight_imag) / lambda_max
         edge_weight_imag.masked_fill_(edge_weight_imag == float("inf"), 0)
 
-        #edge_index, edge_weight_imag = add_self_loops(
-        #    edge_index, edge_weight_imag, fill_value=0, num_nodes=num_nodes )
         assert edge_weight_imag is not None
         return edge_index, edge_weight_real, edge_weight_imag
 
