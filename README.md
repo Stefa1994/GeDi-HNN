@@ -31,11 +31,13 @@ The repository contains three folders:
 Example for the training of GeDi-HNN
 
 ```
-python3 train_test_1.py --method OUR --dname telegram --second_name telegram --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --raw_data_dir $raw_data_dir --data_dir $data_dir
+python3 train_test_1.py --method OUR --dname telegram --second_name telegram --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path>
 
 
-python3 train_test.py --method OUR --dname Eu --second_name Eu --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --raw_data_dir $raw_data_dir --data_dir $data_dir
+python3 train_test.py --method OUR --dname Eu --second_name Eu --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path>
 ```
+
+Note that ```--raw_data_dir``` is the full path to load raw data. The processed data will be saved into the path specified by ```--data_dir```.
 
 
 ## License
