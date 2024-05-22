@@ -96,7 +96,7 @@ def main(args):
         data = LEGCN.line_expansion(data)
     elif args.method =='PhenomNN':
         data = GCNModel.data_creation(data, args)
-    elif args.method =='OUR':
+    elif args.method =='GeDi':
         edge_index, norm_real, norm_imag = process_magnetic_laplacian_sparse(edge_index=data.edge_index, x_real=data.x, edge_weight=data.edge_weight, \
         normalization = 'sym', num_nodes=data.num_nodes,return_lambda_max = False)
     
@@ -144,7 +144,7 @@ def main(args):
         model = GCNModel(nfeat=data.num_features, nhid=args.MLP_hidden, nclass=data.num_classes, nhidlayer=args.nhidden,
                     dropout=args.dropout, baseblock='phenomnn', nbaselayer=args.nbaseblocklayer,
                     args=args)
-    elif args.method == 'OUR':
+    elif args.method == 'GeDi':
         model = Future_node_classification(K=1, num_features=data.num_features, hidden=args.MLP_hidden, label_dim=data.num_classes,     # hidden=256 dropout= 0.3
                             i_complex = False,  layer=args.nconv, other_complex=args.other_complex, edge_index=edge_index,\
                            norm_real=norm_real, norm_imag=norm_imag, dropout=args.dropout, gcn=False, args=args)
@@ -158,6 +158,8 @@ def main(args):
     
     loss_fn = nn.NLLLoss()
     evaluator = utils.NodeClsEvaluator()
+    if (not args.directed) and (args.method == 'GeDi'):
+        args.method = 'GeDI_undirected'
     runtime_list = []
     for run in range(args.runs):
         start_time = time.time()
@@ -280,7 +282,7 @@ if __name__ == '__main__':
     parser.add_argument('--normalization', default='ln', choices=['bn','ln','None'])
     parser.add_argument('--activation', default='relu', choices=['Id','relu', 'prelu'])
     
-    # Args for OUR
+    # Args for GeDi
     parser.add_argument('--other_complex', action='store_true', default=False)
     parser.add_argument('--nconv', default=2, type=int)
 
