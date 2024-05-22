@@ -1,6 +1,6 @@
-# GD_HNN
+# GeDi-HNN
 
-This repository contains the official PyTorch implementation of GD-HNN, including both its code and the code for running other Hypergraph Neural Networks.
+This repository contains the official PyTorch implementation of GeDi-HNN, including both its code and the code for running other Hypergraph Neural Networks.
 
 ## Enviroment Setup
 The experiments were conducted under this specific environment:
@@ -28,15 +28,16 @@ The repository contains three folders:
 
 ## Run code
 
+Example for the training of GeDi-HNN
+
 ```
-cd src
-python3 QuaterGCN.py --dataset dataset_nodes500_alpha0.05_beta0.2
-python3 Edge_QuaterGCN.py --dataset dataset_nodes500_alpha0.05_beta0.2 --task three_class_digraph --noisy
-python3 sing_link_prediction.py --dataset=bitcoin_alpha --task=four_class_signed_digraph --num_classes=4 --num_layers=2 --epochs=300 --dropout=0.5 --lr=1e-2
-python3 sing_link_prediction.py --dataset=bitcoin_alpha --task=five_class_signed_digraph --num_classes=5 --num_layers=2 --epochs=300 --dropout=0.5 --lr=1e-2
+python3 train_test_1.py --method OUR --dname telegram --second_name telegram --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --raw_data_dir $raw_data_dir --data_dir $data_dir
+
+
+python3 train_test.py --method OUR --dname Eu --second_name Eu --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --raw_data_dir $raw_data_dir --data_dir $data_dir
 ```
 
 
 ## License
 
-QuaNet is released under the [Apace 2.0 License](https://choosealicense.com/licenses/mit/)
+GeDi-HNN is released under the [Apace 2.0 License](https://choosealicense.com/licenses/mit/)
