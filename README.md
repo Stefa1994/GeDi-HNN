@@ -7,8 +7,8 @@ The experiments were conducted under this specific environment:
 
 1. Ubuntu 20.04.3 LTS
 2. Python 3.8.10
-3. CUDA 12.2 
-4. Torch 2.0.1 (with CUDA 12.2 )
+3. CUDA 11.7
+4. Torch 2.0.1 (with CUDA 11.7 )
 
 
 In addition, torch-scatter, torch-sparse and torch-geometric are needed to handle scattered graphs and train Graph Neural Networks (GNNs) for a wide range of applications related to structured data. For these three packages, follow the official instructions for [torch-scatter](https://github.com/rusty1s/pytorch_scatter), [torch-sparse](https://github.com/rusty1s/pytorch_sparse), and [torch-geometric](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html).
