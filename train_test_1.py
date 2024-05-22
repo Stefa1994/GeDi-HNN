@@ -19,7 +19,7 @@ from models import SetGNN, HCHA, HNHN, HyperGCN, HyperSAGE, \
 from scipy.sparse import coo_matrix
 #from data import read_data, read_data_pub
 
-from src import process_magnetic_laplacian, process_magnetic_laplacian_standard, process_magnetic_laplacian_sparse, process_magnetic_laplacian_sparse_2
+from src importprocess_magnetic_laplacian_sparse
 import datasets_direction
 import datasets
 
