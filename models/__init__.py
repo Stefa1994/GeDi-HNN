@@ -8,5 +8,5 @@ from models.hypernd import HyperND
 from models.allset import SetGNN
 from models.edgnn import EquivSetGNN
 from models.directedhypergraph import Future_node_classification
-from models.directedhypergraph_gcn import Future_node_classification_new
+#from models.directedhypergraph_gcn import Future_node_classification_new
 from models.phenonmnn import GCNModel
