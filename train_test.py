@@ -15,7 +15,7 @@ import torch_geometric
 from tqdm import tqdm
 
 from models import SetGNN, HCHA, HNHN, HyperGCN, HyperSAGE, \
-    LEGCN, UniGCNII, HyperND, EquivSetGNN, Future_node_classification, GCNModel, Future_node_classification_new
+    LEGCN, UniGCNII, HyperND, EquivSetGNN, Future_node_classification, GCNModel
 from scipy.sparse import coo_matrix
 #from data import read_data, read_data_pub
 
