@@ -213,9 +213,6 @@ class HypergraphDataset(InMemoryDataset):
                 else:
                     raw_data = load_citation_dataset_direction(path = self.path_to_download, dataset = dataset_name)
                 #raw_data = load_citation_dataset(path = self.path_to_download, dataset = dataset_name)
-            elif dataset_name in self.coauthor_list:
-                dataset_name = dataset_name.split('_')[-1]
-                raw_data = load_citation_pubmed_dataset_direction(path = self.path_to_download, dataset = dataset_name)
             elif dataset_name in self.mail:
                 raw_data = load_mail_dataset_direction(path = self.path_to_download, dataset = dataset_name)
             elif dataset_name in self.synthetic:

@@ -25,6 +25,10 @@ import datasets
 
 import utils
 
+'''
+For running the detaset expect for Telegram, Cornell, Texas, Wisconsin
+'''
+
 def vertex_degree(edge_index, num_nodes):
     # incident matrix construction
     row, col = edge_index

@@ -68,8 +68,6 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
     deg_node_inv_sqrt[deg_node_inv_sqrt == float('inf')]= 0
     Dv = coo_matrix((deg_node_inv_sqrt.flatten(), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32)
         
-    print('Dimension Dv:', Dv.shape)
-
 
     # vertex degree with identity matrix
     diag = coo_matrix( (np.ones(num_nodes), (np.arange(num_nodes), np.arange(num_nodes))), shape=(num_nodes, num_nodes), dtype=np.float32).todense()
@@ -87,7 +85,6 @@ def get_Laplacian_complited( edge_index = torch.LongTensor, edge_weight : Option
     deg_edge_inv_sqrt = np.power(d_edge, -1) #deg_edge_inv_sqrt = 1/d_edge #np.power(d_edge, -1) or flatyten()
     deg_edge_inv_sqrt[deg_edge_inv_sqrt == float('inf')]= 0
     De = coo_matrix((deg_edge_inv_sqrt.flatten(), (np.arange(size_col), np.arange(size_col))), shape=(size_col, size_col), dtype=np.float32)
-    print('Dimension De:', De.shape)
 
     ##############################
     ### Diagonal matrix = identity matrix

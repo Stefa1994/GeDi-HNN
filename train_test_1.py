@@ -19,11 +19,15 @@ from models import SetGNN, HCHA, HNHN, HyperGCN, HyperSAGE, \
 from scipy.sparse import coo_matrix
 #from data import read_data, read_data_pub
 
-from src importprocess_magnetic_laplacian_sparse
+from src import process_magnetic_laplacian_sparse
 import datasets_direction
 import datasets
 
 import utils
+
+'''
+For running Telegram, Cornell, Texas, Wisconsin dataset
+'''
 
 def in_out_degree(edge_index, size, weight=None):
     if weight is None:
