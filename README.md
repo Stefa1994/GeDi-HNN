@@ -32,7 +32,7 @@ Example for the training of GeDi-HNN on Telegram and Cornell
 ```
 python3 train_test_1.py --method GeDi --dname telegram --second_name telegram --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path>
 
-python3 train_test_1.py --method GeDi --dname WebKB --second_name cornell --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path>
+python3 train_test_1.py --method GeDi --dname WebKB --second_name cornell --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path> --other_complex
 ```
 
 Example for running experiments on the other datasets
