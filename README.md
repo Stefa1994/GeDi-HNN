@@ -37,7 +37,11 @@ python3 train_test_1.py --method GeDi --dname telegram --second_name telegram --
 python3 train_test.py --method GeDi --dname Eu --second_name Eu --nconv 2 --Classifier_num_layers 2 --MLP_hidden 64 --Classifier_hidden 64 --wd 0.005 --epochs 500 --runs 10 --directed True --data_dir <data_path> --raw_data_dir <raw_data_path>
 ```
 
-Note that ```--raw_data_dir``` is the full path to load raw data. The processed data will be saved into the path specified by ```--data_dir```.
+Note that:
+   1. ```--raw_data_dir``` is the full path to load raw data.
+   2. ```--data_dir``` is the full path where the processed data will be saved.
+   3. ```train_test_1.py``` is for running the 4 datasets: Telegram, Cornell, Texas, Wisconsin.
+   4. ```train_test.py``` is for running all the other datasets.
 
 
 ## License
